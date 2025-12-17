@@ -9,13 +9,31 @@ use Illuminate\Validation\Rule;
 
 class PekerjaanController extends Controller
 {
-    public function index(Request $request) {
-        $keyword = $request->get('keyword');
-        $data = Pekerjaan::when($keyword, function ($query) use ($keyword) {
-            $query->where('nama', 'like', "%{$keyword}%")->orWhere('deskripsi', 'like', "%{$keyword}%");
-        })->get();
+    public function index(Request $request) 
+    {
+        $keyword = $request->keyword;
+        $showDeleted = $request->boolean('deleted');
+
+        $query = Pekerjaan::withCount(['pegawai'=>function($q){
+            $q->whereNull('deleted_at');
+        }]);
+
+        if ($showDeleted) {
+            $query->onlyTrashed();
+        }
+
+        if ($keyword) {
+            $query->where(function ($q) use ($keyword) {
+                $q->where('nama', 'like', "%{$keyword}%")
+                ->orWhere('deskripsi', 'like', "%{$keyword}%");
+            });
+        }
+
+        $data = $query->paginate(7)->withQueryString();
+
         return view('pekerjaan.index', compact('data'));
     }
+
 
     public function add() {
         return view('pekerjaan.add');
@@ -59,10 +77,15 @@ class PekerjaanController extends Controller
         $data->deskripsi = $request->deskripsi;
 
         if ($data->save()) {
-            return redirect()->route('pekerjaan.index')->with('success', 'Data tersimpan');
+            return redirect()->route('pekerjaan.index')->with('success', 'Data sudah teredit');
         } else {
             return redirect()->route('pekerjaan.index')->with('success', 'Data tidak tersimpan');
         }
+    }
+
+    public function restore($id){
+        Pekerjaan::withTrashed()->findOrFail($id)->restore();
+        return redirect()->back()->with('success', 'Data berhasil dipulihkan');
     }
 
     public function destroy(Request $request) {

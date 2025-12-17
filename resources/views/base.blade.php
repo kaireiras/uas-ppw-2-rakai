@@ -51,8 +51,8 @@
         <a href="#" class="flex items-center space-x-2 rtl:space-x-reverse">
             <img src="{{ asset('img/logo.png') }}" class="h-12" alt="Logo UGM"/>
             <div class="flex flex-col leading-tight">
-                <span class="text-lg md:text-xl font-bold text-[#631913]">NAMA SAYA</span>
-                <span class="text-xs md:text-sm font-semibold text-[#631913]">NIM SAYA</span>
+                <span class="text-lg md:text-xl font-bold text-[#631913]">Rakai Ahmad Maulana</span>
+                <span class="text-xs md:text-sm font-semibold text-[#631913]">24/535115/SV/24156</span>
             </div>
         </a>
         <button id="menu-btn" type="button" class="inline-flex flex-none items-center p-1 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
@@ -70,7 +70,7 @@
                     <a href="{{ route('pekerjaan.index') }}" class="block py-2 px-3 md:p-0 transition-transform hover:scale-120 text-[#96291F] @yield('menupekerjaan')">Pekerjaan</a>
                 </li>
                 <li>
-                    <a href="#" class="block py-2 px-3 md:p-0 transition-transform hover:scale-120 text-[#96291F] @yield('menupegawai')">Pegawai</a>
+                    <a href="{{ route('pegawai.index') }}" class="block py-2 px-3 md:p-0 transition-transform hover:scale-120 text-[#96291F] @yield('menupegawai')">Pegawai</a>
                 </li>
             </ul>
         </div>
@@ -108,9 +108,9 @@
                 <div>
                     <div class="text-white text-right">
                         <h2 class="mb-2 text-sm font-semibold uppercase">Identitas Mahasiswa</h2>
-                        <p>Nama Saya</p>
-                        <p>NIM Saya</p>
-                        <p>Kelas Praktikum</p>
+                        <p>Rakai Ahmad Maulana</p>
+                        <p>24/535115/SV/24156</p>
+                        <p>Kelas Praktikum B1</p>
                     </div>
                 </div>
             </div>
